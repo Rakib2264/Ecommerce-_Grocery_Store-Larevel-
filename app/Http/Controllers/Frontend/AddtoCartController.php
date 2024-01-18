@@ -12,7 +12,6 @@ class AddtoCartController extends Controller
 public function addtocart(Request $request){
 
     $cart = AddtoCart::create([
-        "user_id"=>Auth::user()->id,
         'price' => $request->price,
         'product_id' => $request->product_id,
         'qty'=>$request->qty ? $request->qty : 1,

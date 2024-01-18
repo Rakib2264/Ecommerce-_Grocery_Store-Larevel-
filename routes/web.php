@@ -26,14 +26,13 @@ Route::get("/category/product/{slug}",[FrontendController::class,"category_produ
 Route::get("/Subcategory/product/{slug}",[FrontendController::class,"subcategory_product"])->name("subcategory_product");
 Route::get("/single/product/{slug}",[FrontendController::class,"single_product"])->name("single_product");
 Route::post("/addtocart",[AddtoCartController::class,"addtocart"])->name("addtocart");
-Route::get("/checkout",[FrontendController::class,"checkout"])->name("checkout");
 Route::post("/cardproductqty/{id}",[FrontendController::class,"cardproductqty"])->name("cardproductqty");
 Route::get("/peoduct_delete_form_cart/{id}",[FrontendController::class,"peoduct_delete_form_cart"])->name("peoduct_delete_form_cart");
 Route::post("/confirm_order",[FrontendController::class,"confirm_order"])->name("confirm_order");
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'role:user'])->group(function () {
+     Route::get("/checkout",[FrontendController::class,"checkout"])->name("checkout");
+    });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -44,6 +43,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get("/invoice_print/{id}",[AdminController::class,"invoice_print"])->name("invoice_print");
+
     });
 
     Route::group(['prefix' => 'category'], function () {

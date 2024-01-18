@@ -1,3 +1,44 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .w3l_header_right {
+        float: right;
+        margin-right: 20px;
+    }
+
+    .w3l_header_right button {
+        color: #352f2f;
+        margin: 0 10px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .w3l_header_right button:hover {
+        color: #0c0b0b;
+    }
+
+    .w3l_header_right a {
+        color: #dfbebe;
+        margin: 0 10px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .w3l_header_right a:hover {
+        color: #f1e7e7;
+    }
+</style>
 <div class="agileits_header">
     <div class="w3l_offers">
         <a href="products.html">Today's special Offers !</a>
@@ -15,6 +56,26 @@
             </fieldset>
      </div>
     <div class="w3l_header_right">
+
+        <div class="header">
+
+            <div class="w3l_header_right">
+                @if (Auth::check())
+                <form action="{{ route("logout") }}" method="post">
+                    @csrf
+                    <button>Logout</button>
+                </form>
+
+
+                @elseif (Auth::check()==null)
+                <a href="{{route("login")}}">Login</a>
+                <a href="{{route("register")}}">Sign Up</a>
+                @endif
+
+            </div>
+        </div>
+        {{-- <a href="login.html">Login</a>
+        <a href="login.html">Sign Up</a>
         <ul>
             <li class="dropdown profile_details_drop">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"
@@ -28,11 +89,11 @@
                     </div>
                 </div>
             </li>
-        </ul>
+        </ul> --}}
     </div>
-    <div class="w3l_header_right1">
+    {{-- <div class="w3l_header_right1">
         <h2><a href="mail.html">Contact Us</a></h2>
-    </div>
+    </div> --}}
     <div class="clearfix"> </div>
 </div>
 <script>
