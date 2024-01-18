@@ -29,6 +29,7 @@ Route::post("/addtocart",[AddtoCartController::class,"addtocart"])->name("addtoc
 Route::get("/checkout",[FrontendController::class,"checkout"])->name("checkout");
 Route::post("/cardproductqty/{id}",[FrontendController::class,"cardproductqty"])->name("cardproductqty");
 Route::get("/peoduct_delete_form_cart/{id}",[FrontendController::class,"peoduct_delete_form_cart"])->name("peoduct_delete_form_cart");
+Route::post("/confirm_order",[FrontendController::class,"confirm_order"])->name("confirm_order");
 
 Route::get('/dashboard', function () {
     return view('dashboard');

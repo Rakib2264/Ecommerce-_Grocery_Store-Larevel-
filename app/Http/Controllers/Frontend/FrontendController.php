@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\AddtoCart;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
@@ -65,6 +66,27 @@ use File;
             $cartdelete = AddtoCart::find($id);
             $cartdelete->delete();
             return redirect()->back()->with("message","Cart Deleted");
+
+        }
+
+        public function confirm_order(Request $request){
+         $order = new Order();
+         $order->total_price = $request->total_price;
+         $order->total_qty = $request->total_qty;
+         $order->name = $request->name;
+         $order->email = $request->email;
+         $order->phone = $request->phone;
+         $order->address = $request->address;
+         $order->save();
+
+         if($order->save()){
+            $cartProducts = AddtoCart::all();
+            foreach($cartProducts as $cartProduct){
+                $cartProduct->delete();
+            }
+         }
+
+            return redirect()->back()->with("message","Order Confirmed");
 
         }
 

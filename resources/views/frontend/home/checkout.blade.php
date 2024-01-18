@@ -68,6 +68,7 @@
                         <tbody>
                             @php
                                 $sum = 0;
+                                $totalqty = 0;
                             @endphp
                             @foreach ($products as $product)
                                 <tr class="rem1">
@@ -77,7 +78,7 @@
                                     <td class="invert">
                                         <form action="{{ route('cardproductqty', $product->id) }}" method="post">
                                             @csrf
-                                            <input type="number" name="qty" min="1" value="{{ $product->qty }}">
+                                            <input type="number" name="qty" min="1" value="{{ $qty=$product->qty }}">
                                             <button type="submit"
                                                 class="btn btn-sm btn-outline-secondary btn-success ">Update</button>
                                         </form>
@@ -100,6 +101,7 @@
                                 </tr>
                                 @php
                                 $sum = $sum + $total;
+                                $totalqty = $totalqty + $qty;
                                 @endphp
                             @endforeach
                         </tbody>
@@ -115,52 +117,44 @@
                     </div>
                     <div class="col-md-8 address_form_agile">
                         <h4>Add a new Details</h4>
-                        <form action="payment.html" method="post" class="creditly-card-form agileinfo_form">
+                        <form action="{{route("confirm_order")}}" method="post" class="creditly-card-form agileinfo_form">
+                            @csrf
+                            <input type="hidden" name="total_price" value="{{$sum}}">
+                            <input type="hidden" name="total_qty" value="{{$totalqty}}">
                             <section class="creditly-wrapper wthree, w3_agileits_wrapper">
                                 <div class="information-wrapper">
                                     <div class="first-row form-group">
                                         <div class="controls">
                                             <label class="control-label">Full name: </label>
-                                            <input class="billing-address-name form-control" type="text" name="name"
+                                            <input name="name" class="billing-address-name form-control" type="text" name="name"
                                                 placeholder="Full name">
                                         </div>
                                         <div class="w3_agileits_card_number_grids">
                                             <div class="w3_agileits_card_number_grid_left">
                                                 <div class="controls">
                                                     <label class="control-label">Mobile number:</label>
-                                                    <input class="form-control" type="text" placeholder="Mobile number">
+                                                    <input name="phone" class="form-control" type="number" placeholder="Mobile number">
                                                 </div>
                                             </div>
                                             <div class="w3_agileits_card_number_grid_right">
                                                 <div class="controls">
-                                                    <label class="control-label">Landmark: </label>
-                                                    <input class="form-control" type="text" placeholder="Landmark">
+                                                    <label class="control-label">Email: </label>
+                                                    <input name="email" class="form-control" type="email" placeholder="Landmark">
                                                 </div>
                                             </div>
                                             <div class="clear"> </div>
                                         </div>
                                         <div class="controls">
-                                            <label class="control-label">Town/City: </label>
-                                            <input class="form-control" type="text" placeholder="Town/City">
+                                            <label class="control-label">Address: </label>
+                                            <textarea name="address" class="form-control" id="" cols="10" rows="3"></textarea>
                                         </div>
-                                        <div class="controls">
-                                            <label class="control-label">Address type: </label>
-                                            <select class="form-control option-w3ls">
-                                                <option>Office</option>
-                                                <option>Home</option>
-                                                <option>Commercial</option>
 
-                                            </select>
-                                        </div>
                                     </div>
-                                    <button class="submit check_out">Delivery to this Address</button>
+                                    <button type="submit" class="submit check_out">Confirm</button>
                                 </div>
                             </section>
                         </form>
-                        <div class="checkout-right-basket">
-                            <a href="payment.html">Make a Payment <span class="glyphicon glyphicon-chevron-right"
-                                    aria-hidden="true"></span></a>
-                        </div>
+
                     </div>
 
                     <div class="clearfix"> </div>
