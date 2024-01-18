@@ -10,14 +10,10 @@
         </form>
     </div>
     <div class="product_list_header">
-        <form action="#" method="post" class="last">
-            <fieldset>
-                <input type="hidden" name="cmd" value="_cart" />
-                <input type="hidden" name="display" value="1" />
-                <input type="submit" name="submit" value="View your cart" class="button" />
+             <fieldset>
+                <button  class="button"><a href="{{route('checkout')}}">View your cart : {{count($carts)}} </a></button>
             </fieldset>
-        </form>
-    </div>
+     </div>
     <div class="w3l_header_right">
         <ul>
             <li class="dropdown profile_details_drop">
@@ -71,9 +67,11 @@
             <ul class="phone_email">
                 <li><i class="fa fa-phone" aria-hidden="true"></i>(+0123) 234 567</li>
                 <li><i class="fa fa-envelope-o" aria-hidden="true"></i><a
-                        href="mailto:store@grocery.com">store@grocery.com</a></li>
+                        href="mailto:store@grocery.com">store@grocery.com<a/a></li>
             </ul>
         </div>
         <div class="clearfix"> </div>
     </div>
 </div>
+
+

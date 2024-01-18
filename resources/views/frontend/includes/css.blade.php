@@ -6,6 +6,8 @@
 <!-- font-awesome icons -->
 <link href="{{ asset('frontend') }}/css/font-awesome.css" rel="stylesheet" type="text/css" media="all" />
 <!-- //font-awesome icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
 <!-- js -->
 <script src="{{ asset('frontend') }}/js/jquery-1.11.1.min.js"></script>
 <!-- //js -->

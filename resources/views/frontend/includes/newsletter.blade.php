@@ -1,4 +1,4 @@
-<div class="newsletter">
+<div class="newsletter mt-3">
     <div class="container">
         <div class="w3agile_newsletter_left">
             <h3>sign up for our newsletter</h3>

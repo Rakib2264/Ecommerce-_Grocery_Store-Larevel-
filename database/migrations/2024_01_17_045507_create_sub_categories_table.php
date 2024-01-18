@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('sub_categories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('cat_id');
-            $table->string('slug')->unique;
+            $table->string('name');
+            $table->string('slug');
             $table->foreign('cat_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });

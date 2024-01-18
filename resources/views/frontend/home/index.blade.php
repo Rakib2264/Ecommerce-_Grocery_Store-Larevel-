@@ -1,6 +1,5 @@
 @extends('frontend.master')
 @section('frontend_content')
-
 <div class="banner">
     <div class="w3l_banner_nav_left">
         <nav class="navbar nav_bottom">
@@ -16,50 +15,25 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+
+                @foreach ($categories as $category)
+
                 <ul class="nav navbar-nav nav_1">
-                    <li><a href="products.html">Branded Foods</a></li>
-                    <li><a href="household.html">Households</a></li>
                     <li class="dropdown mega-dropdown active">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Veggies & Fruits<span
+                        <a href="{{route('category_product',$category->slug)}}" >{{$category->name}}<span
                                 class="caret"></span></a>
                         <div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
                             <div class="w3ls_vegetables">
                                 <ul>
-                                    <li><a href="vegetables.html">Vegetables</a></li>
-                                    <li><a href="vegetables.html">Fruits</a></li>
+                                    @foreach ($category->subcategories as $subcategory)
+                                    <li><a href="{{route('subcategory_product',$subcategory->id)}}">{{$subcategory->name}}</a></li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
                     </li>
-                    <li><a href="kitchen.html">Kitchen</a></li>
-                    <li><a href="short-codes.html">Short Codes</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Beverages<span
-                                class="caret"></span></a>
-                        <div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
-                            <div class="w3ls_vegetables">
-                                <ul>
-                                    <li><a href="drinks.html">Soft Drinks</a></li>
-                                    <li><a href="drinks.html">Juices</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="pet.html">Pet Food</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Frozen Foods<span
-                                class="caret"></span></a>
-                        <div class="dropdown-menu mega-dropdown-menu w3ls_vegetables_menu">
-                            <div class="w3ls_vegetables">
-                                <ul>
-                                    <li><a href="frozen.html">Frozen Snacks</a></li>
-                                    <li><a href="frozen.html">Frozen Nonveg</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="bread.html">Bread & Bakery</a></li>
                 </ul>
+                @endforeach
             </div><!-- /.navbar-collapse -->
         </nav>
     </div>
@@ -153,6 +127,8 @@
     <div class="container">
         <h3>Hot Offers</h3>
         <div class="agile_top_brands_grids">
+
+            @foreach ($hot_offer as $hot_offer)
             <div class="col-md-3 top_brand_left">
                 <div class="hover14 column">
                     <div class="agile_top_brand_left_grid">
@@ -162,29 +138,24 @@
                             <figure>
                                 <div class="snipcart-item block">
                                     <div class="snipcart-thumb">
-                                        <a href="single.html"><img title=" " alt=" "
-                                                src="{{ asset('frontend') }}/images/1.png" /></a>
-                                        <p>fortune sunflower oil</p>
-                                        <h4>$7.99 <span>$10.00</span></h4>
+                                        <a href="{{ route('single_product',$hot_offer->slug) }}"><img height="140" width="140" title=" " alt=" "
+                                                src="{{asset("product/".$hot_offer->image)}}" /></a>
+                                                <p>{{$hot_offer->name}}</p>
+                                                <h4>${{$hot_offer->sale_price}} <span>${{$hot_offer->buy_price}}</span></h4>
                                     </div>
                                     <div class="snipcart-details top_brand_home_details">
-                                        <form action="checkout.html" method="post">
-                                            <fieldset>
-                                                <input type="hidden" name="cmd" value="_cart" />
-                                                <input type="hidden" name="add" value="1" />
-                                                <input type="hidden" name="business" value=" " />
-                                                <input type="hidden" name="item_name"
-                                                    value="Fortune Sunflower Oil" />
-                                                <input type="hidden" name="amount" value="7.99" />
-                                                <input type="hidden" name="discount_amount" value="1.00" />
-                                                <input type="hidden" name="currency_code" value="USD" />
-                                                <input type="hidden" name="return" value=" " />
-                                                <input type="hidden" name="cancel_return" value=" " />
-                                                <input type="submit" name="submit" value="Add to cart"
-                                                    class="button" />
-                                            </fieldset>
+                                        <form action="{{route("addtocart")}}" method="post">
+                                            @csrf
+
+                                                <input type="hidden" name="product_id" value="{{ $hot_offer->id }}">
+                                                <input type="hidden" name="price" value="{{ $hot_offer->sale_price }}">
+                                                <input type="hidden" name="name" value="{{ $hot_offer->name }}">
+                                                <input type="hidden" name="qty" value="1"> <!-- Default quantity to 1, can be adjusted by the user -->
+                                                <input type="hidden" name="image" value="{{ $hot_offer->image }}">
+                                                <input type="submit" name="submit" value="Add to cart" class="button">
 
                                         </form>
+
 
                                     </div>
                                 </div>
@@ -193,120 +164,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 top_brand_left">
-                <div class="hover14 column">
-                    <div class="agile_top_brand_left_grid">
-                        <div class="agile_top_brand_left_grid1">
-                            <figure>
-                                <div class="snipcart-item block">
-                                    <div class="snipcart-thumb">
-                                        <a href="single.html"><img title=" " alt=" "
-                                                src="{{ asset('frontend') }}/images/3.png" /></a>
-                                        <p>basmati rise (5 Kg)</p>
-                                        <h4>$11.99 <span>$15.00</span></h4>
-                                    </div>
-                                    <div class="snipcart-details top_brand_home_details">
-                                        <form action="#" method="post">
-                                            <fieldset>
-                                                <input type="hidden" name="cmd" value="_cart" />
-                                                <input type="hidden" name="add" value="1" />
-                                                <input type="hidden" name="business" value=" " />
-                                                <input type="hidden" name="item_name" value="basmati rise" />
-                                                <input type="hidden" name="amount" value="11.99" />
-                                                <input type="hidden" name="discount_amount" value="1.00" />
-                                                <input type="hidden" name="currency_code" value="USD" />
-                                                <input type="hidden" name="return" value=" " />
-                                                <input type="hidden" name="cancel_return" value=" " />
-                                                <input type="submit" name="submit" value="Add to cart"
-                                                    class="button" />
-                                            </fieldset>
-                                        </form>
-                                    </div>
-                                </div>
-                            </figure>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 top_brand_left">
-                <div class="hover14 column">
-                    <div class="agile_top_brand_left_grid">
-                        <div class="agile_top_brand_left_grid_pos">
-                            <img src="{{ asset('frontend') }}/images/offer.png" alt=" "
-                                class="img-responsive" />
-                        </div>
-                        <div class="agile_top_brand_left_grid1">
-                            <figure>
-                                <div class="snipcart-item block">
-                                    <div class="snipcart-thumb">
-                                        <a href="single.html"><img src="{{ asset('frontend') }}/images/2.png"
-                                                alt=" " class="img-responsive" /></a>
-                                        <p>Pepsi soft drink (2 Ltr)</p>
-                                        <h4>$8.00 <span>$10.00</span></h4>
-                                    </div>
-                                    <div class="snipcart-details top_brand_home_details">
-                                        <form action="#" method="post">
-                                            <fieldset>
-                                                <input type="hidden" name="cmd" value="_cart" />
-                                                <input type="hidden" name="add" value="1" />
-                                                <input type="hidden" name="business" value=" " />
-                                                <input type="hidden" name="item_name"
-                                                    value="Pepsi soft drink" />
-                                                <input type="hidden" name="amount" value="8.00" />
-                                                <input type="hidden" name="discount_amount" value="1.00" />
-                                                <input type="hidden" name="currency_code" value="USD" />
-                                                <input type="hidden" name="return" value=" " />
-                                                <input type="hidden" name="cancel_return" value=" " />
-                                                <input type="submit" name="submit" value="Add to cart"
-                                                    class="button" />
-                                            </fieldset>
-                                        </form>
-                                    </div>
-                                </div>
-                            </figure>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 top_brand_left">
-                <div class="hover14 column">
-                    <div class="agile_top_brand_left_grid">
-                        <div class="agile_top_brand_left_grid_pos">
-                            <img src="{{ asset('frontend') }}/images/offer.png" alt=" "
-                                class="img-responsive" />
-                        </div>
-                        <div class="agile_top_brand_left_grid1">
-                            <figure>
-                                <div class="snipcart-item block">
-                                    <div class="snipcart-thumb">
-                                        <a href="single.html"><img src="{{ asset('frontend') }}/images/4.png"
-                                                alt=" " class="img-responsive" /></a>
-                                        <p>dogs food (4 Kg)</p>
-                                        <h4>$9.00 <span>$11.00</span></h4>
-                                    </div>
-                                    <div class="snipcart-details top_brand_home_details">
-                                        <form action="#" method="post">
-                                            <fieldset>
-                                                <input type="hidden" name="cmd" value="_cart" />
-                                                <input type="hidden" name="add" value="1" />
-                                                <input type="hidden" name="business" value=" " />
-                                                <input type="hidden" name="item_name" value="dogs food" />
-                                                <input type="hidden" name="amount" value="9.00" />
-                                                <input type="hidden" name="discount_amount" value="1.00" />
-                                                <input type="hidden" name="currency_code" value="USD" />
-                                                <input type="hidden" name="return" value=" " />
-                                                <input type="hidden" name="cancel_return" value=" " />
-                                                <input type="submit" name="submit" value="Add to cart"
-                                                    class="button" />
-                                            </fieldset>
-                                        </form>
-                                    </div>
-                                </div>
-                            </figure>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
+
+
             <div class="clearfix"> </div>
         </div>
     </div>

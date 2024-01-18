@@ -29,4 +29,27 @@ class CategoryController extends Controller
         $category->save();
         return redirect()->back()->with("message","Category Added");
     }
+
+    public function edit($id){
+        $category = Category::find($id);
+        return view("backend.pages.category.edit",compact("category"));
+
+    }
+
+    public function update(Request $request , $id){
+        $category = Category::find($id);
+        $category->name = $request->name;
+        $category->slug = Str::slug($request->name);
+
+        $category->save();
+        return redirect()->route('category.manage')->with("message","Category Updated");
+    }
+
+    public function delete($id){
+        $category = Category::find($id);
+        $category->delete();
+        return redirect()->back()->with("message","Category Deleted");
+
+
+    }
 }
